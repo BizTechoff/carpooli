@@ -1,0 +1,46 @@
+.home {
+  max-width: 560px;
+  margin: 0 auto;
+
+  .greeting {
+    font-size: 22px;
+    margin: 6px 4px 16px;
+  }
+
+  .hero {
+    background: linear-gradient(150deg, var(--brand), #5c7cfa);
+    color: #fff;
+    border: none;
+    margin-bottom: 14px;
+
+    .hero-title {
+      font-size: 20px;
+      font-weight: 800;
+    }
+    p {
+      margin: 8px 0 0;
+      opacity: 0.92;
+    }
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: var(--ink);
+
+    .lbl {
+      font-weight: 800;
+    }
+    .sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .chev {
+      margin-inline-start: auto;
+      color: var(--muted);
+    }
+  }
+}

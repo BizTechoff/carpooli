@@ -1,0 +1,18 @@
+<div class="signin">
+  <div class="brand">🚗</div>
+  <h2>{{ terms.appTitle }}</h2>
+  <p>{{ terms.enterMobile }}</p>
+
+  <mat-form-field appearance="outline" class="field">
+    <input
+      matInput
+      type="tel"
+      dir="ltr"
+      [(ngModel)]="mobile"
+      placeholder="050-123-4567"
+      (keyup.enter)="signIn()"
+    />
+  </mat-form-field>
+
+  <button class="big-btn primary" (click)="signIn()">{{ terms.signIn }}</button>
+</div>

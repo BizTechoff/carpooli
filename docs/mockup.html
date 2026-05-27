@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הסעות בר-אילן · Mockup</title>
+<style>
+  :root{
+    --bg:#eef1f7;
+    --ink:#1c2433;
+    --muted:#6b7484;
+    --line:#e6e9f0;
+    --brand:#3b5bdb;
+    --brand-d:#2f49b0;
+    --accent:#0ca678;
+    --warn:#f08c00;
+    --danger:#e03131;
+    --card:#ffffff;
+    --soft:#f4f6fb;
+    --radius:22px;
+    --shadow:0 18px 40px -18px rgba(28,36,51,.35);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Rubik,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#e9edf6,#dfe5f1);color:var(--ink);padding:40px 16px 80px}
+  .head{max-width:1200px;margin:0 auto 34px;text-align:center}
+  .head .logo{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;
+    padding:10px 18px;border-radius:16px;font-weight:800;font-size:18px;box-shadow:var(--shadow)}
+  .head h1{font-size:26px;margin:18px 0 6px;letter-spacing:-.5px}
+  .head p{color:var(--muted);margin:0;font-size:15px}
+  .gallery{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;gap:34px;justify-content:center}
+  .frameWrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .frameLabel{font-weight:700;font-size:14px;color:var(--muted)}
+  /* phone */
+  .phone{width:330px;height:680px;background:#0b1020;border-radius:46px;padding:12px;
+    box-shadow:var(--shadow);position:relative}
+  .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:120px;height:26px;
+    background:#0b1020;border-radius:0 0 16px 16px;z-index:5}
+  .screen{background:var(--bg);width:100%;height:100%;border-radius:36px;overflow:hidden;
+    display:flex;flex-direction:column;position:relative}
+  .statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:700;color:var(--ink);flex:none}
+  .appbar{background:var(--brand);color:#fff;padding:14px 18px 16px;flex:none;
+    display:flex;align-items:center;justify-content:space-between}
+  .appbar h2{margin:0;font-size:18px;font-weight:800}
+  .appbar .sub{font-size:12px;opacity:.85;margin-top:2px}
+  .avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.22);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .body{flex:1;overflow:auto;padding:16px 16px 14px}
+  .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 8px 22px -16px rgba(28,36,51,.4);
+    border:1px solid var(--line);margin-bottom:14px}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+    padding:5px 11px;border-radius:999px}
+  .pill.green{background:#e6fcf5;color:var(--accent)}
+  .pill.amber{background:#fff4e6;color:var(--warn)}
+  .pill.red{background:#fff0f0;color:var(--danger)}
+  .pill.blue{background:#edf2ff;color:var(--brand)}
+  .hero{background:linear-gradient(150deg,var(--brand),#5c7cfa);color:#fff;border:none}
+  .hero .turn{font-size:13px;opacity:.9;font-weight:600}
+  .hero .big{font-size:23px;font-weight:800;margin:6px 0 2px;line-height:1.25}
+  .hero .meta{font-size:13px;opacity:.92;margin-top:10px;display:flex;gap:16px;flex-wrap:wrap}
+  .hero .meta b{font-weight:800}
+  .sectionTitle{font-size:13px;font-weight:800;color:var(--muted);margin:4px 4px 10px}
+  .kid{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--soft)}
+  .kid:last-child{border-bottom:none}
+  .kdot{width:34px;height:34px;border-radius:12px;background:var(--soft);display:flex;align-items:center;
+    justify-content:center;font-weight:800;color:var(--brand);font-size:14px;flex:none}
+  .kid .nm{font-weight:700;font-size:14px}
+  .kid .st{margin-right:auto;font-size:12px;font-weight:700}
+  .ok{color:var(--accent)} .no{color:var(--danger)} .pend{color:var(--warn)}
+  .btn{display:block;width:100%;text-align:center;padding:15px;border-radius:16px;border:none;
+    font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+  .btn.primary{background:var(--brand);color:#fff}
+  .btn.ghost{background:var(--soft);color:var(--ink)}
+  .btn.green{background:var(--accent);color:#fff}
+  .row2{display:flex;gap:10px}
+  .row2 .btn{flex:1}
+  .tabbar{flex:none;background:#fff;border-top:1px solid var(--line);display:flex;
+    padding:8px 6px 12px;justify-content:space-around}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:700;
+    color:var(--muted);flex:1}
+  .tab.active{color:var(--brand)}
+  .tab .ic{font-size:20px;line-height:1}
+  /* schedule rows */
+  .day{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:16px;padding:12px;
+    margin-bottom:10px;border:1px solid var(--line)}
+  .date{width:48px;height:48px;border-radius:14px;background:var(--soft);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;flex:none}
+  .date .d{font-size:18px;font-weight:800;line-height:1} .date .m{font-size:10px;color:var(--muted);font-weight:700}
+  .day .info{flex:1;min-width:0}
+  .day .ttl{font-weight:800;font-size:14px}
+  .day .drv{font-size:12px;color:var(--muted);margin-top:3px}
+  .arrow{font-size:11px;font-weight:800}
+  /* signin */
+  .signin{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:30px 26px;text-align:center;background:linear-gradient(160deg,#fff,#eef2fb)}
+  .brandMark{width:74px;height:74px;border-radius:22px;background:var(--brand);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-size:34px;box-shadow:var(--shadow);margin-bottom:18px}
+  .signin h3{margin:0 0 4px;font-size:22px}
+  .signin p{color:var(--muted);margin:0 0 26px;font-size:14px}
+  .input{width:100%;padding:15px;border-radius:14px;border:1.5px solid var(--line);font-size:16px;
+    text-align:center;font-family:inherit;background:#fff;margin-bottom:14px;direction:ltr}
+  .otp{display:flex;gap:8px;justify-content:center;direction:ltr;margin-bottom:18px}
+  .otp span{width:44px;height:54px;border-radius:12px;border:1.5px solid var(--line);background:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800}
+  .otp span.f{border-color:var(--brand);color:var(--brand)}
+  /* fairness bars */
+  .bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .bar .lbl{width:64px;font-size:13px;font-weight:700}
+  .bar .track{flex:1;height:14px;background:var(--soft);border-radius:999px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:999px;background:var(--brand)}
+  .bar .val{font-size:12px;font-weight:800;color:var(--muted);width:20px;text-align:left}
+  .note{font-size:11px;color:var(--muted);text-align:center;margin-top:18px}
+  .add{position:absolute;bottom:78px;left:18px;width:52px;height:52px;border-radius:50%;background:var(--accent);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="logo">🚗 הסעות בר-אילן</div>
+  <h1>פלטפורמת ניהול הסעות משותפות — Mockup</h1>
+  <p>מובייל-פירסט · תחושת אפליקציה · פשוט, גדול ויעיל · עיצוב בלבד (ללא קוד פעיל)</p>
+</div>
+
+<div class="gallery">
+
+  <!-- 1. SIGN IN -->
+  <div class="frameWrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="signin">
+        <div class="brandMark">🚗</div>
+        <h3>הסעות בר-אילן</h3>
+        <p>התחברות עם מספר הנייד</p>
+        <input class="input" value="050-123-4567" readonly>
+        <div class="otp"><span class="f">4</span><span>9</span><span>1</span><span>2</span></div>
+        <button class="btn primary">כניסה</button>
+        <div class="note">קוד נשלח ב-SMS · החיבור נשמר לשנה</div>
+      </div>
+    </div></div>
+    <div class="frameLabel">1 · התחברות (מובייל / OTP)</div>
+  </div>
+
+  <!-- 2. HOME / TODAY -->
+  <div class="frameWrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="appbar">
+        <div><h2>שלום, משה 👋</h2><div class="sub">יום ראשון · 31 במאי</div></div>
+        <div class="avatar">מ</div>
+      </div>
+      <div class="body">
+        <div class="card hero">
+          <div class="turn">🔔 היום התור שלך להסיע</div>
+          <div class="big">אתה מסיע לחוג היום</div>
+          <div class="meta"><span>🕔 איסוף <b>16:45</b></span><span>📍 בר-אילן <b>17:15</b></span><span>👶 <b>3</b> ילדים</span></div>
+        </div>
+        <div class="sectionTitle">מי מגיע היום</div>
+        <div class="card" style="padding:8px 16px">
+          <div class="kid"><div class="kdot">ד</div><div class="nm">דניאל</div><span class="st ok">✓ מגיע</span></div>
+          <div class="kid"><div class="kdot">י</div><div class="nm">יעל</div><span class="st ok">✓ מגיע</span></div>
+          <div class="kid"><div class="kdot">נ</div><div class="nm">נועם</div><span class="st ok">✓ מגיע</span></div>
+          <div class="kid"><div class="kdot" style="opacity:.5">א</div><div class="nm" style="opacity:.5">איתי</div><span class="st no">✕ לא מגיע</span></div>
+        </div>
+        <button class="btn green">סמן יציאה לסבב →</button>
+      </div>
+      <div class="tabbar">
+        <div class="tab active"><span class="ic">🏠</span>היום</div>
+        <div class="tab"><span class="ic">🗓️</span>סידור</div>
+        <div class="tab"><span class="ic">👥</span>קבוצה</div>
+      </div>
+    </div></div>
+    <div class="frameLabel">2 · בית / היום</div>
+  </div>
+
+  <!-- 3. ATTENDANCE CONFIRM -->
+  <div class="frameWrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="appbar">
+        <div><h2>אישור הגעה</h2><div class="sub">תזכורת ליום מחר</div></div>
+        <div class="avatar">מ</div>
+      </div>
+      <div class="body" style="display:flex;flex-direction:column;justify-content:center">
+        <div class="card" style="text-align:center;padding:26px 18px">
+          <span class="pill blue">🗓️ מחר · ראשון 17:15</span>
+          <div style="font-size:46px;margin:18px 0 6px">👦</div>
+          <div style="font-size:20px;font-weight:800">האם <b>דניאל</b> מגיע לחוג מחר?</div>
+          <p style="color:var(--muted);font-size:13px;margin:8px 0 22px">בר-אילן · 17:15–19:00</p>
+          <div class="row2">
+            <button class="btn green">✓ מגיע</button>
+            <button class="btn ghost">✕ לא מגיע</button>
+          </div>
+          <div class="note">תשובתך מעדכנת אוטומטית את סבב הנהיגה</div>
+        </div>
+        <div class="card" style="padding:12px 16px">
+          <div style="font-size:13px;font-weight:700">צריך הסעה?</div>
+          <div class="row2" style="margin-top:10px">
+            <button class="btn ghost" style="padding:11px;font-size:14px">הלוך ✓</button>
+            <button class="btn ghost" style="padding:11px;font-size:14px">חזור ✓</button>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div class="frameLabel">3 · אישור הגעה (הקלקה אחת)</div>
+  </div>
+
+  <!-- 4. WEEKLY SCHEDULE -->
+  <div class="frameWrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="appbar">
+        <div><h2>סידור נסיעות</h2><div class="sub">שבוע 31.5–6.6</div></div>
+        <div class="avatar">מ</div>
+      </div>
+      <div class="body">
+        <div class="day">
+          <div class="date"><div class="d">31</div><div class="m">ראשון</div></div>
+          <div class="info"><div class="ttl">חוג · 17:15</div>
+            <div class="drv">🚗 הלוך: <b>משה</b> · חזור: <b>שרה</b></div></div>
+          <span class="pill green">3 ילדים</span>
+        </div>
+        <div class="day">
+          <div class="date"><div class="d">3</div><div class="m">רביעי</div></div>
+          <div class="info"><div class="ttl">חוג · 17:15</div>
+            <div class="drv">🚗 הלוך: <b>שרה</b> · חזור: <b>דוד</b></div></div>
+          <span class="pill green">4 ילדים</span>
+        </div>
+        <div class="day" style="opacity:.65">
+          <div class="date"><div class="d">5</div><div class="m">שישי</div></div>
+          <div class="info"><div class="ttl">חוג · 17:15</div>
+            <div class="drv">⏳ ממתין לאישורי הגעה</div></div>
+          <span class="pill amber">2 חסר</span>
+        </div>
+        <div class="sectionTitle" style="margin-top:6px">צריך להחליף תור?</div>
+        <button class="btn ghost">↔ בקש החלפת נהג</button>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">🏠</span>היום</div>
+        <div class="tab active"><span class="ic">🗓️</span>סידור</div>
+        <div class="tab"><span class="ic">👥</span>קבוצה</div>
+      </div>
+    </div></div>
+    <div class="frameLabel">4 · סידור שבועי</div>
+  </div>
+
+  <!-- 5. GROUP / ADMIN -->
+  <div class="frameWrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="appbar">
+        <div><h2>הקבוצה</h2><div class="sub">4 הורים · 4 ילדים</div></div>
+        <div class="avatar">מ</div>
+      </div>
+      <div class="body">
+        <div class="sectionTitle">הורים ונהגים</div>
+        <div class="card" style="padding:8px 16px">
+          <div class="kid"><div class="kdot">מ</div><div class="nm">משה <span style="font-weight:500;color:var(--muted)">· דניאל</span></div><span class="pill green" style="margin-right:auto">🚗 4 מקומות</span></div>
+          <div class="kid"><div class="kdot">ש</div><div class="nm">שרה <span style="font-weight:500;color:var(--muted)">· יעל</span></div><span class="pill green" style="margin-right:auto">🚗 5 מקומות</span></div>
+          <div class="kid"><div class="kdot">ד</div><div class="nm">דוד <span style="font-weight:500;color:var(--muted)">· נועם</span></div><span class="pill green" style="margin-right:auto">🚗 4 מקומות</span></div>
+          <div class="kid"><div class="kdot">ר</div><div class="nm">רוני <span style="font-weight:500;color:var(--muted)">· איתי</span></div><span class="pill blue" style="margin-right:auto">ללא נהיגה</span></div>
+        </div>
+        <div class="sectionTitle">האירוע</div>
+        <div class="card" style="padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px"><div style="font-weight:800">חוג בבר-אילן</div><span class="pill blue">חוג</span></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">חוזר · ימים א׳ + ד׳ · 17:15 · 90 דק׳ · 4 ילדים בסבב</div>
+        </div>
+      </div>
+      <div class="add">+</div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">🏠</span>היום</div>
+        <div class="tab"><span class="ic">🗓️</span>סידור</div>
+        <div class="tab active"><span class="ic">👥</span>קבוצה</div>
+      </div>
+    </div></div>
+    <div class="frameLabel">5 · ניהול קבוצה (אדמין)</div>
+  </div>
+
+  <!-- 6. FAIRNESS -->
+  <div class="frameWrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="appbar">
+        <div><h2>הוגנות הסבב</h2><div class="sub">חודש מאי</div></div>
+        <div class="avatar">מ</div>
+      </div>
+      <div class="body">
+        <div class="card">
+          <div class="sectionTitle" style="margin:0 0 14px">מספר נסיעות לכל הורה</div>
+          <div class="bar"><div class="lbl">משה</div><div class="track"><div class="fill" style="width:80%"></div></div><div class="val">4</div></div>
+          <div class="bar"><div class="lbl">שרה</div><div class="track"><div class="fill" style="width:80%"></div></div><div class="val">4</div></div>
+          <div class="bar"><div class="lbl">דוד</div><div class="track"><div class="fill" style="width:60%;background:var(--accent)"></div></div><div class="val">3</div></div>
+          <div class="bar"><div class="lbl">רוני</div><div class="track"><div class="fill" style="width:20%;background:var(--warn)"></div></div><div class="val">1</div></div>
+        </div>
+        <div class="card hero" style="padding:14px 16px">
+          <div class="turn">⚖️ ההצעה הבאה של המערכת</div>
+          <div class="big" style="font-size:18px">התור הבא: <b>דוד</b></div>
+          <div class="meta"><span>נהג הכי מעט לאחרונה</span></div>
+        </div>
+        <div class="note">המערכת בוחרת אוטומטית את ההורה ההוגן ביותר, ומדלגת אם הילד שלו לא מגיע</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="ic">🏠</span>היום</div>
+        <div class="tab"><span class="ic">🗓️</span>סידור</div>
+        <div class="tab"><span class="ic">👥</span>קבוצה</div>
+      </div>
+    </div></div>
+    <div class="frameLabel">6 · דוח הוגנות + הצעת תור</div>
+  </div>
+
+</div>
+</body>
+</html>

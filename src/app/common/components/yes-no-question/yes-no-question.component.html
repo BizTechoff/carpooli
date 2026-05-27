@@ -1,0 +1,7 @@
+<div class="ynq">
+  <div class="message">{{ args.message }}</div>
+  <div class="actions">
+    <button mat-flat-button color="primary" (click)="confirm()">{{ terms.ok }}</button>
+    <button *ngIf="args.isQuestion" mat-button (click)="cancel()">{{ terms.cancel }}</button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="schedule">
+  <div class="head">
+    <mat-form-field appearance="outline" *ngIf="events.length > 1" class="event-select">
+      <mat-label>{{ terms.event }}</mat-label>
+      <select matNativeControl [(ngModel)]="selectedEventId" (ngModelChange)="load()">
+        <option *ngFor="let e of events" [value]="e.id">{{ e.name }}</option>
+      </select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="generate()">
+      <mat-icon>autorenew</mat-icon> חשב סידור
+    </button>
+  </div>
+
+  <div *ngIf="occurrences.length === 0" class="empty">
+    אין מופעים בטווח. לחץ "חשב סידור" כדי לייצר סבב לחודש הקרוב.
+  </div>
+
+  <div class="day card" *ngFor="let o of occurrences">
+    <div class="date">
+      <div class="d">{{ o.occurrence.date | date: 'd' }}</div>
+      <div class="m">{{ o.occurrence.date | date: 'EEE' }}</div>
+    </div>
+    <div class="info">
+      <div class="ttl">{{ o.occurrence.startTime }}–{{ o.occurrence.endTime }}</div>
+      <div class="drv">
+        🚗 {{ terms.to }}: <b>{{ driverName(o.toAssignment?.assignedParentId) }}</b>
+        · {{ terms.from }}: <b>{{ driverName(o.fromAssignment?.assignedParentId) }}</b>
+      </div>
+    </div>
+    <span class="count">{{ attendingCount(o) }} {{ terms.children }}</span>
+  </div>
+</div>

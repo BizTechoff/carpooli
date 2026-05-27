@@ -1,0 +1,26 @@
+<div class="home">
+  <h2 class="greeting">{{ terms.hello }}, {{ remult.user?.name }} 👋</h2>
+
+  <div class="card hero">
+    <div class="hero-title">{{ terms.appTitle }}</div>
+    <p>ניהול סבב ההסעות שלך — פשוט, הוגן ואוטומטי.</p>
+  </div>
+
+  <a class="card link" routerLink="/schedule">
+    <mat-icon>event</mat-icon>
+    <div>
+      <div class="lbl">{{ terms.schedule }}</div>
+      <div class="sub">מי מסיע מתי — הלוך וחזור</div>
+    </div>
+    <mat-icon class="chev">chevron_left</mat-icon>
+  </a>
+
+  <a class="card link" routerLink="/group">
+    <mat-icon>group</mat-icon>
+    <div>
+      <div class="lbl">{{ terms.group }}</div>
+      <div class="sub">הורים, ילדים, אירוע ומדיניות</div>
+    </div>
+    <mat-icon class="chev">chevron_left</mat-icon>
+  </a>
+</div>

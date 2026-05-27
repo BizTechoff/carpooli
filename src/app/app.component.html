@@ -1,0 +1,27 @@
+<ng-container *ngIf="ready">
+  <mat-toolbar class="topbar" color="primary">
+    <span class="title">{{ terms.appTitle }}</span>
+    <span class="spacer"></span>
+    <span class="user" *ngIf="remult.authenticated()">{{ remult.user?.name }}</span>
+    <button mat-icon-button *ngIf="remult.authenticated()" (click)="signOut()" [attr.aria-label]="terms.signOut">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <nav class="tabbar" *ngIf="remult.authenticated()">
+    <a
+      *ngFor="let t of tabs"
+      class="tab"
+      [routerLink]="t.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: isExact(t.path) }"
+    >
+      <mat-icon>{{ t.icon }}</mat-icon>
+      <span>{{ t.label }}</span>
+    </a>
+  </nav>
+</ng-container>

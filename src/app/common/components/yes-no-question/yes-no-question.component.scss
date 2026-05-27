@@ -1,0 +1,16 @@
+.ynq {
+  padding: 20px;
+  min-width: 240px;
+  text-align: center;
+
+  .message {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+}
