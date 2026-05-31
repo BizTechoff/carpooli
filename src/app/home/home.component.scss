@@ -9,51 +9,196 @@
     letter-spacing: 0.2px;
   }
 
-  .hero {
-    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 60%, #7a93ff 100%);
-    color: #fff;
-    border: none;
+  .skeleton {
+    text-align: center;
+    color: var(--muted);
+    padding: 30px;
+  }
+
+  // ── אין אירועים היום ──
+  .empty {
+    text-align: center;
+    padding: 32px 22px;
     margin-bottom: 16px;
-    padding: 22px 20px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 18px 40px -18px rgba(66, 99, 235, 0.55);
 
-    &::before {
-      content: '';
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      top: -110px;
-      inset-inline-start: -50px;
-      pointer-events: none;
+    .emoji {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: var(--brand);
+      margin-bottom: 10px;
     }
-    &::after {
-      content: '';
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
-      bottom: -60px;
-      inset-inline-end: -30px;
-      pointer-events: none;
-    }
-
-    .hero-title {
-      font-size: 22px;
+    .ttl {
+      font-size: 18px;
       font-weight: 800;
-      letter-spacing: 0.2px;
-      position: relative;
+      margin-bottom: 4px;
     }
-    p {
-      margin: 10px 0 0;
-      opacity: 0.92;
-      line-height: 1.55;
-      position: relative;
+    .sub {
+      color: var(--muted);
+      margin-bottom: 18px;
     }
+    .link-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 10px 22px -10px rgba(66, 99, 235, 0.55);
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  // ── כרטיסי אירוע היום ──
+  .items {
+    margin-bottom: 16px;
+  }
+
+  .item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0;
+    margin-bottom: 14px;
+    overflow: hidden;
+
+    &.my-turn {
+      border-color: transparent;
+      box-shadow: 0 18px 40px -18px rgba(66, 99, 235, 0.45);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #fff;
+
+      mat-icon {
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
+        flex: none;
+      }
+
+      .hero-ttl {
+        font-weight: 800;
+        font-size: 16px;
+      }
+      .hero-sub {
+        font-size: 13px;
+        opacity: 0.92;
+        margin-top: 2px;
+      }
+
+      &.quiet {
+        background: linear-gradient(135deg, rgba(66, 99, 235, 0.08), rgba(92, 124, 250, 0.04));
+        color: var(--ink);
+
+        mat-icon {
+          color: var(--brand);
+        }
+        .hero-sub {
+          color: var(--muted);
+        }
+      }
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 14px 18px 10px;
+
+      .row {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13.5px;
+        color: var(--ink);
+        font-weight: 600;
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          color: var(--muted);
+        }
+      }
+    }
+
+    .legs {
+      display: flex;
+      gap: 10px;
+      padding: 4px 18px 16px;
+    }
+
+    .leg {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--soft);
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+
+      > mat-icon {
+        color: var(--muted);
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        flex: none;
+      }
+
+      .leg-info {
+        flex: 1;
+        min-width: 0;
+
+        .dir {
+          font-size: 11px;
+          font-weight: 800;
+          color: var(--muted);
+          letter-spacing: 0.4px;
+          text-transform: uppercase;
+        }
+        .drv {
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--ink);
+          margin-top: 1px;
+        }
+      }
+
+      &.me {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+
+        > mat-icon {
+          color: var(--accent);
+        }
+        .drv {
+          color: var(--accent);
+        }
+      }
+    }
+  }
+
+  // ── ניווט מהיר ──
+  .quick-links {
+    margin-top: 10px;
   }
 
   .link {
@@ -65,7 +210,8 @@
     text-decoration: none;
     color: var(--ink);
     cursor: pointer;
-    transition: transform 0.08s var(--ease), box-shadow 0.18s var(--ease), border-color 0.18s var(--ease);
+    transition: transform 0.08s var(--ease), box-shadow 0.18s var(--ease),
+      border-color 0.18s var(--ease);
 
     > mat-icon:first-of-type {
       width: 44px;
@@ -82,12 +228,12 @@
 
     .lbl {
       font-weight: 800;
-      font-size: 16px;
+      font-size: 15px;
     }
     .sub {
       font-size: 13px;
       color: var(--muted);
-      margin-top: 3px;
+      margin-top: 2px;
     }
     .chev {
       margin-inline-start: auto;
@@ -100,10 +246,6 @@
     &:hover {
       transform: translateY(-1px);
       box-shadow: 0 18px 36px -20px rgba(28, 36, 51, 0.4);
-      border-color: var(--brand-2);
-    }
-    &:active {
-      transform: translateY(0);
     }
   }
 }

@@ -1,26 +1,92 @@
 <div class="home">
   <h2 class="greeting">{{ terms.hello }}, {{ remult.user?.name }} 👋</h2>
 
-  <div class="card hero">
-    <div class="hero-title">{{ terms.appTitle }}</div>
-    <p>ניהול סבב ההסעות שלך — פשוט, הוגן ואוטומטי.</p>
+  <div *ngIf="loading" class="card skeleton">{{ terms.loading }}</div>
+
+  <!-- אין אירועים היום -->
+  <div *ngIf="!loading && items.length === 0" class="card empty">
+    <mat-icon class="emoji">event_available</mat-icon>
+    <div class="ttl">{{ terms.noEventToday }}</div>
+    <div class="sub">{{ terms.enjoyFreeDay }}</div>
+    <a routerLink="/schedule" class="link-cta">
+      <span>צפה בסידור הקרוב</span>
+      <mat-icon>chevron_left</mat-icon>
+    </a>
   </div>
 
-  <a class="card link" routerLink="/schedule">
-    <mat-icon>event</mat-icon>
-    <div>
-      <div class="lbl">{{ terms.schedule }}</div>
-      <div class="sub">מי מסיע מתי — הלוך וחזור</div>
-    </div>
-    <mat-icon class="chev">chevron_left</mat-icon>
-  </a>
+  <!-- כרטיסי אירוע היום -->
+  <div *ngIf="!loading && items.length > 0" class="items">
+    <div
+      class="item"
+      *ngFor="let it of items"
+      [class.my-turn]="iAmDrivingToday(it)"
+    >
+      <!-- הרו עליון: התור שלי / רגיל -->
+      <div class="hero" *ngIf="iAmDrivingToday(it)">
+        <mat-icon>notifications_active</mat-icon>
+        <div>
+          <div class="hero-ttl">{{ terms.yourTurnToday }}</div>
+          <div class="hero-sub">{{ it.eventName }} · {{ it.startTime }}</div>
+        </div>
+      </div>
 
-  <a class="card link" routerLink="/group">
-    <mat-icon>group</mat-icon>
-    <div>
-      <div class="lbl">{{ terms.group }}</div>
-      <div class="sub">הורים, ילדים, אירוע ומדיניות</div>
+      <div class="hero quiet" *ngIf="!iAmDrivingToday(it) && it.myChildName">
+        <mat-icon>child_care</mat-icon>
+        <div>
+          <div class="hero-ttl">{{ terms.yourChildInRotation }}</div>
+          <div class="hero-sub">{{ it.myChildName }} · {{ it.eventName }} · {{ it.startTime }}</div>
+        </div>
+      </div>
+
+      <!-- פרטי האירוע -->
+      <div class="meta">
+        <div class="row">
+          <mat-icon>schedule</mat-icon>
+          <span>{{ it.startTime }}–{{ it.endTime }}</span>
+        </div>
+        <div class="row" *ngIf="it.location">
+          <mat-icon>place</mat-icon>
+          <span>{{ it.location }}</span>
+        </div>
+      </div>
+
+      <!-- legs -->
+      <div class="legs">
+        <div class="leg" [class.me]="it.iDriveTo">
+          <mat-icon>arrow_back</mat-icon>
+          <div class="leg-info">
+            <div class="dir">{{ terms.to }}</div>
+            <div class="drv">{{ it.iDriveTo ? terms.youAreDriving : it.toDriverName }}</div>
+          </div>
+        </div>
+        <div class="leg" [class.me]="it.iDriveFrom">
+          <mat-icon>arrow_forward</mat-icon>
+          <div class="leg-info">
+            <div class="dir">{{ terms.from }}</div>
+            <div class="drv">{{ it.iDriveFrom ? terms.youAreDriving : it.fromDriverName }}</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <mat-icon class="chev">chevron_left</mat-icon>
-  </a>
+  </div>
+
+  <!-- ניווט מהיר -->
+  <div class="quick-links">
+    <a class="card link" routerLink="/schedule">
+      <mat-icon>event</mat-icon>
+      <div>
+        <div class="lbl">{{ terms.schedule }}</div>
+        <div class="sub">מי מסיע מתי</div>
+      </div>
+      <mat-icon class="chev">chevron_left</mat-icon>
+    </a>
+    <a class="card link" routerLink="/group">
+      <mat-icon>group</mat-icon>
+      <div>
+        <div class="lbl">{{ terms.group }}</div>
+        <div class="sub">הורים, ילדים ואירועים</div>
+      </div>
+      <mat-icon class="chev">chevron_left</mat-icon>
+    </a>
+  </div>
 </div>

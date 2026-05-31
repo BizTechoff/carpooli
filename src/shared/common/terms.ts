@@ -24,6 +24,11 @@ export const terms = {
 
   // ניווט / מסכים
   today: 'היום',
+  noEventToday: 'אין אירועים היום',
+  enjoyFreeDay: 'תיהנה מהיום החופשי 😊',
+  youAreDriving: 'אתה מסיע',
+  yourTurnToday: 'התור שלך להסיע היום',
+  yourChildInRotation: 'הילד שלך בסבב היום',
   schedule: 'סידור',
   group: 'קבוצה',
   events: 'אירועים',
