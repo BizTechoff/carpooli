@@ -11,26 +11,54 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 button {
   font-family: inherit;
 }
 
-// loader dialog — שקוף ונקי
-.wait-dialog .mat-mdc-dialog-surface {
-  background: transparent;
-  box-shadow: none;
+// ── איחוד פונט על כל רכיבי Material (אחרת Material משתמש ב-Roboto ונראה לא אחיד) ──
+.mat-typography,
+.mat-toolbar,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button,
+.mat-mdc-icon-button,
+.mat-mdc-form-field,
+.mat-mdc-card,
+.mat-mdc-dialog-container,
+.mat-mdc-snack-bar-container,
+.mat-mdc-select,
+.mat-mdc-option,
+.mdc-button__label {
+  font-family: 'Rubik', -apple-system, 'Segoe UI', Arial, sans-serif !important;
 }
 
-// כרטיסים, אזורי-מגע גדולים
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 16px;
+// ── Toolbar עליון בצבע המותג ──
+.mat-toolbar.topbar {
+  background: var(--brand);
+  color: #fff;
+  min-height: 56px;
+  box-shadow: 0 2px 12px -6px rgba(28, 36, 51, 0.5);
+}
+
+// ── שדות טופס: רוחב מלא, פינות מעוגלות, מותאם נייד ──
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+// ── כפתורים גדולים ומעוגלים (תחושת אפליקציה) ──
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
 }
 
 .big-btn {
@@ -42,4 +70,51 @@ button {
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
+  transition: transform 0.05s ease, filter 0.15s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+  &.primary {
+    background: var(--brand);
+    color: #fff;
+  }
+  &.accent {
+    background: var(--accent);
+    color: #fff;
+  }
+  &.ghost {
+    background: var(--soft);
+    color: var(--ink);
+  }
+}
+
+// ── כרטיסים אחידים ──
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+// ── loader dialog שקוף ──
+.wait-dialog .mat-mdc-dialog-surface {
+  background: transparent;
+  box-shadow: none;
+}
+
+// ── snackbar מעוגל ──
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  border-radius: 14px !important;
+}
+
+// ── פסי גלילה דקים ──
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cfd5e2;
+  border-radius: 999px;
 }

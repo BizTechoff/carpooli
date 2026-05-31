@@ -1,0 +1,8 @@
+feat: שלד פרויקט bar-ilan — פלטפורמת ניהול הסעות
+
+Stack: Node + Remult 3.3.10 + Angular 19 + Postgres.
+ארכיטקטורה by-domain (groups/users/events/attendance/carpool).
+מנוע סבב הוגן, סידור שבועי, multi-tenancy, i18n, PWA,
+התחברות מבוססת-session.
+
+BizTechoff™ - התאמת העסק לעידן הדיגיטלי

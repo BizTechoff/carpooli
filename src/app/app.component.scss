@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: calc(28px + env(safe-area-inset-bottom));
 }
 
 .topbar {
@@ -32,7 +34,7 @@
   justify-content: space-around;
   background: var(--surface);
   border-top: 1px solid var(--line);
-  padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+  padding: 8px 4px;
 
   .tab {
     display: flex;
@@ -47,6 +49,37 @@
 
     &.active {
       color: var(--brand);
+    }
+  }
+}
+
+.status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 11px;
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    cursor: pointer;
+    direction: ltr;
+    unicode-bidi: isolate;
+
+    i {
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    &:hover {
+      color: var(--brand);
+      text-decoration: underline;
     }
   }
 }
