@@ -1,0 +1,96 @@
+<div class="pd" *ngIf="parent">
+  <header>
+    <h2>{{ isNew() ? terms.add : terms.edit }} · {{ terms.parent }}</h2>
+    <button class="icon-btn" (click)="closeDialog()" [attr.aria-label]="terms.close" type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="body">
+    <div class="field">
+      <label>{{ terms.fullName }}</label>
+      <input type="text" [(ngModel)]="parent.fullName" name="fn" />
+    </div>
+
+    <div class="field-row">
+      <div class="field grow">
+        <label>{{ terms.mobile }}</label>
+        <input type="tel" dir="ltr" [(ngModel)]="parent.mobile" name="m" />
+      </div>
+      <div class="field narrow">
+        <label>{{ terms.seats }}</label>
+        <input type="number" min="0" max="9" [(ngModel)]="parent.seats" name="s" />
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <label class="toggle">
+        <input type="checkbox" [(ngModel)]="parent.canDrive" name="d" />
+        <span class="sw"></span>
+        <span class="lbl">{{ terms.canDrive }}</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" [(ngModel)]="parent.isActive" name="a" />
+        <span class="sw"></span>
+        <span class="lbl">{{ terms.isActive }}</span>
+      </label>
+    </div>
+
+    <div class="field">
+      <label>{{ terms.notes }}</label>
+      <textarea rows="2" [(ngModel)]="parent.notes" name="n"></textarea>
+    </div>
+
+    <!-- ילדים -->
+    <section class="kids" *ngIf="!isNew()">
+      <div class="kids-head">{{ terms.children }}</div>
+
+      <div class="kids-list" *ngIf="children.length > 0">
+        <div class="kid-row" *ngFor="let c of children">
+          <mat-icon class="kid-icon">child_care</mat-icon>
+          <span class="kid-name">{{ c.fullName }}</span>
+          <button
+            class="kid-del"
+            type="button"
+            (click)="deleteChild(c)"
+            [attr.aria-label]="terms.delete"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="children.length === 0" class="empty-kids">{{ terms.noChildren }}</div>
+
+      <div class="kid-add">
+        <div class="field">
+          <label>{{ terms.childName }}</label>
+          <input type="text" [(ngModel)]="newChildName" (keyup.enter)="addChild()" name="ncn" />
+        </div>
+        <button
+          type="button"
+          class="add-btn"
+          (click)="addChild()"
+          [disabled]="!newChildName.trim()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </section>
+
+    <div *ngIf="isNew()" class="kids-hint">{{ terms.saveFirstToAddChildren }}</div>
+  </div>
+
+  <footer class="actions">
+    <button class="btn primary" type="button" (click)="save()">{{ terms.save }}</button>
+    <button class="btn ghost" type="button" (click)="closeDialog()">{{ terms.cancel }}</button>
+    <button
+      *ngIf="!isNew()"
+      class="btn del"
+      type="button"
+      (click)="delete()"
+      [attr.aria-label]="terms.delete"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </footer>
+</div>

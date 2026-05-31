@@ -41,11 +41,17 @@ export class AuthController extends ControllerBase {
 export function setSessionUser(parent?: Parent): UserInfo | undefined {
   const ctx: any = remult.context
   const session = ctx?.request?.session
+  console.info(`[setSessionUser] hasContext=${!!ctx} hasRequest=${!!ctx?.request} hasSession=${!!session} parent=${parent?.fullName}`)
   if (!parent) {
     if (session) session['user'] = undefined
     return undefined
   }
   const info: UserInfo = { id: parent.id, name: parent.fullName, roles: [parent.role.id] }
-  if (session) session['user'] = info
+  if (session) {
+    session['user'] = info
+    console.info(`[setSessionUser] wrote session user: ${JSON.stringify(info)}`)
+  } else {
+    console.warn(`[setSessionUser] NO SESSION — cookie לא ייכתב`)
+  }
   return info
 }

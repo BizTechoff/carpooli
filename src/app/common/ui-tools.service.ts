@@ -3,6 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { openDialog } from './open-dialog'
 import { YesNoQuestionComponent } from './components/yes-no-question/yes-no-question.component'
 import { BusyService } from './components/wait/busy.service'
+import { ParentDetailsComponent } from '../users/parent-details/parent-details.component'
+import { EventDetailsComponent } from '../events/event-details/event-details.component'
+import { SwapDriverComponent } from '../carpool/swap-driver/swap-driver.component'
 import { terms } from '../../shared/common/terms'
 
 export function extractError(err: any): string {
@@ -56,6 +59,38 @@ export class UIToolsService {
       YesNoQuestionComponent,
       (d) => (d.args = { message: question, isQuestion: true }),
       (d) => d.okPressed
+    )
+  }
+
+  /** דיאלוג פרטי הורה (יצירה/עריכה/מחיקה). מחזיר true אם משהו השתנה. */
+  async openParentDetails(parentId = ''): Promise<boolean> {
+    return await openDialog(
+      ParentDetailsComponent,
+      (d) => (d.args = { parentId }),
+      (d) => d?.changed || false
+    )
+  }
+
+  /** דיאלוג פרטי אירוע (יצירה/עריכה/מחיקה + רוסטר ילדים). */
+  async openEventDetails(eventId = '', groupId = ''): Promise<boolean> {
+    return await openDialog(
+      EventDetailsComponent,
+      (d) => (d.args = { eventId, groupId }),
+      (d) => d?.changed || false
+    )
+  }
+
+  /** דיאלוג החלפת נהג בשיבוץ קיים. */
+  async openSwapDriver(args: {
+    assignmentId: string
+    currentParentId: string
+    directionLabel: string
+    seatsNeeded: number
+  }): Promise<boolean> {
+    return await openDialog(
+      SwapDriverComponent,
+      (d) => (d.args = args),
+      (d) => d?.changed || false
     )
   }
 }

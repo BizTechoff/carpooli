@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { Router } from '@angular/router'
+import { NavigationEnd, Router } from '@angular/router'
 import { Remult } from 'remult'
 import { setMatDialog } from './common/open-dialog'
 import { RouteHelperService } from './common/route-helper.service'
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   terms = terms
   ready = false
   tabs: Tab[] = []
+  isAuthRoute = false
 
   constructor(
     public remult: Remult,
@@ -40,24 +41,30 @@ export class AppComponent implements OnInit {
     setMatDialog(dialog)
     AuthenticatedGuard.componentToNavigateIfNotAllowed = SignInComponent
     this.lang.init()
+
+    // מעקב אחר ה-route הנוכחי כדי להסתיר את המעטפת (טולבר/טאבים) במסך הכניסה
+    this.router.events.subscribe((e) => {
+      if (e instanceof NavigationEnd) {
+        this.isAuthRoute = e.urlAfterRedirects.startsWith('/sign-in')
+      }
+    })
   }
 
   async ngOnInit() {
-    try {
-      await this.remult.initUser()
-    } catch {
-      /* ignore */
+    // initUser כבר רץ ב-APP_INITIALIZER לפני bootstrap, אז כאן רק לוודא ניקוי שפויל
+    if (!this.remult.user?.id) {
+      this.remult.user = undefined
     }
     this.buildTabs()
     this.ready = true
-    if (!this.remult.authenticated()) {
-      this.router.navigate(['/sign-in'])
-    }
   }
 
   private buildTabs() {
+    // לטאבים הראשיים: כל route עם data.menu שאינו דורש תפקיד מיוחד.
+    // ה-*ngIf="remult.authenticated()" ב-template כבר מטפל בדרישת ההתחברות,
+    // אז אין צורך בבדיקת guards נוספת (שעלולה להחזיר false ולהסתיר את כל הטאבים).
     this.tabs = routes
-      .filter((r) => r.data && r.data['menu'] && this.routeHelper.canNavigateToRoute(r))
+      .filter((r) => r.data && r.data['menu'])
       .map((r) => ({
         path: '/' + (r.path || ''),
         label: (terms as any)[r.data!['menu']] || r.data!['menu'],
@@ -72,7 +79,13 @@ export class AppComponent implements OnInit {
   async signOut() {
     await this.ui.busy.doWhileShowingBusy(async () => {
       await AuthController.signOut()
-      await this.remult.initUser()
+      // ניקוי מפורש בצד-הקליינט (לא להסתמך רק על initUser)
+      this.remult.user = undefined
+      try {
+        await this.remult.initUser()
+      } catch {
+        /* ignore */
+      }
     })
     this.router.navigate(['/sign-in'])
   }

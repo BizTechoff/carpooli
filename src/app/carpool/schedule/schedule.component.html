@@ -16,17 +16,45 @@
   </div>
 
   <div class="day card" *ngFor="let o of occurrences">
-    <div class="date">
-      <div class="d">{{ o.occurrence.date | date: 'd' }}</div>
-      <div class="m">{{ o.occurrence.date | date: 'EEE' }}</div>
-    </div>
-    <div class="info">
-      <div class="ttl">{{ o.occurrence.startTime }}–{{ o.occurrence.endTime }}</div>
-      <div class="drv">
-        🚗 {{ terms.to }}: <b>{{ driverName(o.toAssignment?.assignedParentId) }}</b>
-        · {{ terms.from }}: <b>{{ driverName(o.fromAssignment?.assignedParentId) }}</b>
+    <div class="day-top">
+      <div class="date">
+        <div class="d">{{ o.occurrence.date | date: 'd' }}</div>
+        <div class="m">{{ o.occurrence.date | date: 'EEE' }}</div>
       </div>
+      <div class="info">
+        <div class="ttl">{{ o.occurrence.startTime }}–{{ o.occurrence.endTime }}</div>
+      </div>
+      <span class="count">{{ attendingCount(o) }} {{ terms.children }}</span>
     </div>
-    <span class="count">{{ attendingCount(o) }} {{ terms.children }}</span>
+
+    <div class="legs">
+      <button
+        class="leg"
+        type="button"
+        *ngIf="o.toAssignment"
+        (click)="swap(o, 'to')"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        <div class="leg-info">
+          <div class="dir">{{ terms.to }}</div>
+          <div class="drv-name">{{ driverName(o.toAssignment?.assignedParentId) }}</div>
+        </div>
+        <mat-icon class="swap-ic">swap_horiz</mat-icon>
+      </button>
+
+      <button
+        class="leg"
+        type="button"
+        *ngIf="o.fromAssignment"
+        (click)="swap(o, 'from')"
+      >
+        <mat-icon>arrow_forward</mat-icon>
+        <div class="leg-info">
+          <div class="dir">{{ terms.from }}</div>
+          <div class="drv-name">{{ driverName(o.fromAssignment?.assignedParentId) }}</div>
+        </div>
+        <mat-icon class="swap-ic">swap_horiz</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

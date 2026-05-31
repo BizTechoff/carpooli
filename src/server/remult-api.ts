@@ -5,6 +5,14 @@
 import { remultApi } from 'remult/remult-express'
 import { createPostgresDataProvider } from 'remult/postgres'
 import { getUser } from './jwt'
+import type express from 'express'
+
+// הזרקת request לתוך remult.context (לא נעשה אוטומטית ב-remult 3 כפי שהיה ב-0.27)
+declare module 'remult' {
+  interface RemultContext {
+    request?: express.Request
+  }
+}
 
 // ---- Entities (לפי דומיין) ----
 import { Group } from '../shared/groups/group.entity'
@@ -52,6 +60,15 @@ export const api = remultApi({
     ScheduleController
   ],
   getUser,
+  // קריטי: שמירת ה-express request תחת remult.context כדי שגישה ל-session תעבוד
+  // (setSessionUser ב-AuthController ניגש דרך remult.context.request.session).
+  initRequest: async (request, options) => {
+    options.remult.context.request = request
+    const hasSession = !!(request as any).session
+    console.info(
+      `[initRequest] url=${request.originalUrl} hasSession=${hasSession} sessionUser=${JSON.stringify((request as any).session?.user)}`
+    )
+  },
   // Postgres אם הוגדר DATABASE_URL; אחרת ברירת מחדל (קובצי JSON מקומיים) לפיתוח מהיר.
   dataProvider: connectionString
     ? createPostgresDataProvider({ connectionString })

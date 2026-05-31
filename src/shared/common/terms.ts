@@ -61,6 +61,10 @@ export const terms = {
   // ילד
   child: 'ילד',
   children: 'ילדים',
+  childName: 'שם הילד',
+  addChild: 'הוספת ילד',
+  noChildren: 'אין עדיין ילדים — הוסף ראשון',
+  saveFirstToAddChildren: 'שמור את ההורה כדי להוסיף לו ילדים',
   pickupAddress: 'כתובת איסוף',
   parentId: 'הורה אחראי',
 
@@ -71,11 +75,17 @@ export const terms = {
   eventName: 'שם האירוע',
   location: 'מיקום',
   isRecurring: 'אירוע חוזר',
+  oneTimeEvent: 'אירוע חד-פעמי',
   dayOfWeek: 'יום בשבוע',
   date: 'תאריך',
   startTime: 'שעת התחלה',
   durationMinutes: 'משך (דקות)',
   enrolledChildren: 'ילדים בסבב',
+  noEvents: 'אין אירועים עדיין',
+  addEvent: 'הוספת אירוע',
+  eventTypeHint: 'חוג / יום הולדת / קייטנה',
+  saveEventFirstToEnroll: 'שמור את האירוע כדי לבחור ילדים שמשתתפים בסבב',
+  noChildrenInGroup: 'אין ילדים בקבוצה — הוסף תחילה הורים וילדים',
 
   // מופע
   occurrence: 'מופע',

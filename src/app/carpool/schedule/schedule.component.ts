@@ -81,4 +81,16 @@ export class ScheduleComponent implements OnInit {
   driverName(id?: string | null): string {
     return id ? this.parentName[id] || '—' : '—'
   }
+
+  async swap(o: OccurrenceWithAssignments, leg: 'to' | 'from') {
+    const assignment = leg === 'to' ? o.toAssignment : o.fromAssignment
+    if (!assignment) return
+    const changed = await this.ui.openSwapDriver({
+      assignmentId: assignment.id,
+      currentParentId: assignment.assignedParentId,
+      directionLabel: leg === 'to' ? terms.to : terms.from,
+      seatsNeeded: assignment.passengerChildIds?.length || 0
+    })
+    if (changed) await this.load()
+  }
 }

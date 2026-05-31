@@ -1,6 +1,5 @@
-import { Allow, Entity, Field, Fields, IdEntity, Relations, Validators } from 'remult'
+import { Allow, Entity, Fields, IdEntity, Relations, Validators } from 'remult'
 import { terms } from '../common/terms'
-import { DayOfWeek } from './day-of-week.enum'
 import { EventType } from './event-type.entity'
 import { Group } from '../groups/group.entity'
 
@@ -33,9 +32,10 @@ export class Event extends IdEntity {
   @Fields.boolean({ caption: terms.isRecurring })
   isRecurring = true
 
-  // לאירוע חוזר — היום הקבוע בשבוע
-  @Field(() => DayOfWeek, { caption: terms.dayOfWeek, allowNull: true })
-  dayOfWeek: DayOfWeek | null = null
+  // לאירוע חוזר — ימי השבוע הקבועים (תמיכה ב-חוג שמתקיים יותר מפעם בשבוע, למשל א+ד)
+  // נשמר כמערך של ה-id של DayOfWeek ('0'=ראשון ... '6'=שבת)
+  @Fields.object<Event, string[]>({ caption: terms.dayOfWeek })
+  daysOfWeek: string[] = []
 
   // לאירוע חד-פעמי — התאריך
   @Fields.dateOnly({ caption: terms.date, allowNull: true })

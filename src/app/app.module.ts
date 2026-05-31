@@ -1,9 +1,23 @@
-import { NgModule, isDevMode } from '@angular/core'
+import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule } from '@angular/forms'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { Remult, remult } from 'remult'
+
+/**
+ * חוסם את אתחול האפליקציה עד ש-initUser מסיים — קריטי כדי שהראוטר/Guards
+ * יראו remult.user מוכן כבר במאזין הראשון של ה-navigation.
+ */
+export function initUserFactory(r: Remult): () => Promise<void> {
+  return async () => {
+    try {
+      await r.initUser()
+    } catch {
+      /* ignore */
+    }
+  }
+}
 
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatButtonModule } from '@angular/material/button'
@@ -26,6 +40,9 @@ import { ScheduleComponent } from './carpool/schedule/schedule.component'
 import { GroupComponent } from './groups/group/group.component'
 import { WaitComponent } from './common/components/wait/wait.component'
 import { YesNoQuestionComponent } from './common/components/yes-no-question/yes-no-question.component'
+import { ParentDetailsComponent } from './users/parent-details/parent-details.component'
+import { EventDetailsComponent } from './events/event-details/event-details.component'
+import { SwapDriverComponent } from './carpool/swap-driver/swap-driver.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +52,10 @@ import { YesNoQuestionComponent } from './common/components/yes-no-question/yes-
     ScheduleComponent,
     GroupComponent,
     WaitComponent,
-    YesNoQuestionComponent
+    YesNoQuestionComponent,
+    ParentDetailsComponent,
+    EventDetailsComponent,
+    SwapDriverComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +79,15 @@ import { YesNoQuestionComponent } from './common/components/yes-no-question/yes-
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [{ provide: Remult, useValue: remult }],
+  providers: [
+    { provide: Remult, useValue: remult },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initUserFactory,
+      deps: [Remult],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

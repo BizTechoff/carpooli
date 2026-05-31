@@ -26,8 +26,12 @@ export function parentToUserInfo(parent: Parent): UserInfo {
 /** נקרא ע"י remultExpress בכל בקשה — מחזיר את המשתמש המחובר מה-session */
 export async function getUser(req: express.Request): Promise<UserInfo | undefined> {
   const sessionUser = (req as any).session?.['user'] as UserInfo | undefined
+  console.info(`[getUser] cookie=${!!req.headers.cookie} sessionUser=${JSON.stringify(sessionUser)}`)
   if (!sessionUser?.id) return undefined
   const parent = await repo(Parent).findFirst({ id: sessionUser.id, isActive: true })
-  if (!parent) return undefined
+  if (!parent) {
+    console.warn(`[getUser] sessionUser.id=${sessionUser.id} not found in DB`)
+    return undefined
+  }
   return parentToUserInfo(parent)
 }

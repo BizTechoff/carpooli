@@ -1,7 +1,13 @@
 <div class="group">
-  <div class="section-title">{{ terms.members }}</div>
+  <div class="section-head">
+    <div class="section-title">{{ terms.members }}</div>
+    <button type="button" class="add-btn" (click)="openParent('')">
+      <mat-icon>add</mat-icon>
+      <span>{{ terms.add }}</span>
+    </button>
+  </div>
   <div class="card list">
-    <div class="row" *ngFor="let p of parents">
+    <div class="row clickable" *ngFor="let p of parents" (click)="openParent(p.id)">
       <div class="dot">{{ p.fullName.charAt(0) }}</div>
       <div class="nm">
         {{ p.fullName }}
@@ -10,16 +16,27 @@
       <span class="pill" [class.green]="p.canDrive" [class.blue]="!p.canDrive">
         {{ p.canDrive ? '🚗 ' + p.seats + ' ' + terms.seats : 'ללא נהיגה' }}
       </span>
+      <mat-icon class="chev">chevron_left</mat-icon>
     </div>
   </div>
 
-  <div class="section-title">{{ terms.events }}</div>
-  <div class="card event" *ngFor="let e of events">
+  <div class="section-head">
+    <div class="section-title">{{ terms.events }}</div>
+    <button type="button" class="add-btn" (click)="openEvent('')">
+      <mat-icon>add</mat-icon>
+      <span>{{ terms.add }}</span>
+    </button>
+  </div>
+  <div
+    class="card event clickable"
+    *ngFor="let e of events"
+    (click)="openEvent(e.id)"
+  >
     <div class="ev-name">{{ e.name }}</div>
     <div class="ev-sub">
-      {{ e.isRecurring ? 'חוזר' : 'חד-פעמי' }} ·
+      {{ e.isRecurring ? terms.isRecurring : terms.oneTimeEvent }} ·
       {{ e.startTime }} · {{ e.durationMinutes }} {{ terms.durationMinutes }}
     </div>
   </div>
-  <div *ngIf="events.length === 0" class="empty">לא הוגדרו אירועים עדיין.</div>
+  <div *ngIf="events.length === 0" class="empty">{{ terms.noEvents }}</div>
 </div>

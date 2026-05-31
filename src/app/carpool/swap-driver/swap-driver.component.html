@@ -1,0 +1,41 @@
+<div class="pd">
+  <header>
+    <h2>{{ terms.swapDriver }} · {{ args.directionLabel }}</h2>
+    <button class="icon-btn" type="button" (click)="closeDialog()" [attr.aria-label]="terms.close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="body">
+    <div class="field">
+      <label>סיבה (אופציונלי)</label>
+      <input type="text" [(ngModel)]="reason" name="r" placeholder="למשל: שרה לא יכולה היום" />
+    </div>
+
+    <div class="drv-head">בחר נהג חלופי ({{ args.seatsNeeded }} נוסעים)</div>
+
+    <div class="drv-list">
+      <button
+        *ngFor="let d of drivers"
+        type="button"
+        class="drv-row"
+        [class.current]="d.id === args.currentParentId"
+        [disabled]="!enoughSeats(d)"
+        (click)="pick(d)"
+      >
+        <div class="dot">{{ d.fullName.charAt(0) }}</div>
+        <div class="nm">
+          {{ d.fullName }}
+          <span class="meta">{{ d.seats }} {{ terms.seats }}</span>
+        </div>
+        <span class="badge" *ngIf="d.id === args.currentParentId">נוכחי</span>
+        <span class="badge red" *ngIf="!enoughSeats(d)">קטן מדי</span>
+        <mat-icon class="chev" *ngIf="d.id !== args.currentParentId && enoughSeats(d)">chevron_left</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <footer class="actions">
+    <button class="btn ghost" type="button" (click)="closeDialog()">{{ terms.cancel }}</button>
+  </footer>
+</div>

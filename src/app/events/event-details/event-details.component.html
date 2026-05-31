@@ -1,0 +1,118 @@
+<div class="pd" *ngIf="event">
+  <header>
+    <h2>{{ isNew() ? terms.add : terms.edit }} · {{ terms.event }}</h2>
+    <button class="icon-btn" type="button" (click)="closeDialog()" [attr.aria-label]="terms.close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="body">
+    <div class="field">
+      <label>{{ terms.eventName }}</label>
+      <input type="text" [(ngModel)]="event.name" name="en" placeholder="חוג בבר-אילן" />
+    </div>
+
+    <div class="field">
+      <label>{{ terms.eventType }}</label>
+      <input
+        type="text"
+        [(ngModel)]="typeName"
+        list="event-types"
+        name="et"
+        [placeholder]="terms.eventTypeHint"
+      />
+      <datalist id="event-types">
+        <option *ngFor="let t of eventTypes" [value]="t.name"></option>
+      </datalist>
+    </div>
+
+    <div class="field">
+      <label>{{ terms.location }}</label>
+      <input type="text" [(ngModel)]="event.location" name="loc" />
+    </div>
+
+    <div class="toggle-row single">
+      <label class="toggle">
+        <input type="checkbox" [(ngModel)]="event.isRecurring" name="rec" />
+        <span class="sw"></span>
+        <span class="lbl">{{
+          event.isRecurring ? terms.isRecurring : terms.oneTimeEvent
+        }}</span>
+      </label>
+    </div>
+
+    <div class="field" *ngIf="event.isRecurring">
+      <label>{{ terms.dayOfWeek }} <small>(אפשר לבחור כמה)</small></label>
+      <div class="day-pills">
+        <button
+          *ngFor="let d of days"
+          type="button"
+          class="day-pill"
+          [class.active]="isDaySelected(d)"
+          (click)="toggleDay(d)"
+        >
+          {{ d.caption }}
+        </button>
+      </div>
+    </div>
+
+    <div class="field" *ngIf="!event.isRecurring">
+      <label>{{ terms.date }}</label>
+      <input type="date" [(ngModel)]="dateString" name="dt" />
+    </div>
+
+    <div class="field-row">
+      <div class="field grow">
+        <label>{{ terms.startTime }}</label>
+        <input type="time" [(ngModel)]="event.startTime" name="st" />
+      </div>
+      <div class="field narrow">
+        <label>{{ terms.durationMinutes }}</label>
+        <input type="number" min="15" step="15" [(ngModel)]="event.durationMinutes" name="dm" />
+      </div>
+    </div>
+
+    <!-- רוסטר ילדים -->
+    <section class="enrollment" *ngIf="!isNew()">
+      <div class="enrollment-head">{{ terms.enrolledChildren }}</div>
+
+      <div *ngIf="children.length === 0" class="empty-kids">
+        {{ terms.noChildrenInGroup }}
+      </div>
+
+      <div class="kids-list" *ngIf="children.length > 0">
+        <label class="kid-row" *ngFor="let c of children" [class.checked]="isEnrolled(c.id)">
+          <input
+            type="checkbox"
+            [checked]="isEnrolled(c.id)"
+            (change)="toggleEnrolled(c.id)"
+          />
+          <span class="check-mark">
+            <mat-icon *ngIf="isEnrolled(c.id)">check</mat-icon>
+          </span>
+          <mat-icon class="kid-icon">child_care</mat-icon>
+          <span class="kid-name">
+            {{ c.fullName }}
+            <span class="kid-parent" *ngIf="parentById[c.parentId]">· {{ parentById[c.parentId] }}</span>
+          </span>
+        </label>
+      </div>
+    </section>
+
+    <div *ngIf="isNew()" class="kids-hint">{{ terms.saveEventFirstToEnroll }}</div>
+  </div>
+
+  <footer class="actions">
+    <button class="btn primary" type="button" (click)="save()">{{ terms.save }}</button>
+    <button class="btn ghost" type="button" (click)="closeDialog()">{{ terms.cancel }}</button>
+    <button
+      *ngIf="!isNew()"
+      class="btn del"
+      type="button"
+      (click)="delete()"
+      [attr.aria-label]="terms.delete"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </footer>
+</div>

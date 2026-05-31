@@ -12,16 +12,20 @@ body {
   color: var(--ink);
   font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   font-size: 15px;
-  line-height: 1.45;
+  line-height: 1.5;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-button {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
-// ── איחוד פונט על כל רכיבי Material (אחרת Material משתמש ב-Roboto ונראה לא אחיד) ──
+// ── איחוד פונט אגרסיבי על Material ──
 .mat-typography,
 .mat-toolbar,
 .mat-mdc-button,
@@ -29,59 +33,80 @@ button {
 .mat-mdc-unelevated-button,
 .mat-mdc-outlined-button,
 .mat-mdc-icon-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab,
 .mat-mdc-form-field,
 .mat-mdc-card,
 .mat-mdc-dialog-container,
 .mat-mdc-snack-bar-container,
 .mat-mdc-select,
 .mat-mdc-option,
+.mat-mdc-checkbox,
 .mdc-button__label {
   font-family: 'Rubik', -apple-system, 'Segoe UI', Arial, sans-serif !important;
+  letter-spacing: 0 !important;
 }
 
-// ── Toolbar עליון בצבע המותג ──
+// ── Toolbar (טולבר) ──
 .mat-toolbar.topbar {
-  background: var(--brand);
-  color: #fff;
-  min-height: 56px;
-  box-shadow: 0 2px 12px -6px rgba(28, 36, 51, 0.5);
+  background: linear-gradient(135deg, var(--brand), var(--brand-2)) !important;
+  color: #fff !important;
+  min-height: 58px;
+  box-shadow: 0 4px 18px -10px rgba(66, 99, 235, 0.55);
 }
 
-// ── שדות טופס: רוחב מלא, פינות מעוגלות, מותאם נייד ──
+// ── שדות טופס: outline נקי, מעוגלים ──
 .mat-mdc-form-field {
   width: 100%;
+  --mdc-outlined-text-field-outline-color: #d1d6e2;
+  --mdc-outlined-text-field-hover-outline-color: var(--brand-2);
+  --mdc-outlined-text-field-focus-outline-color: var(--brand);
+  --mdc-outlined-text-field-container-shape: 14px;
 }
 
-// ── כפתורים גדולים ומעוגלים (תחושת אפליקציה) ──
+.mat-mdc-text-field-wrapper {
+  border-radius: 14px !important;
+}
+
+// ── כפתורי Material מעוגלים ──
 .mat-mdc-unelevated-button,
 .mat-mdc-raised-button,
-.mat-mdc-outlined-button {
-  border-radius: 14px !important;
+.mat-mdc-outlined-button,
+.mat-mdc-button {
+  --mdc-filled-button-container-shape: 14px;
+  --mdc-outlined-button-container-shape: 14px;
+  --mdc-text-button-container-shape: 14px;
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
 
+// ── כפתור גדול (היוריסטיקה כלל-אפלקטיבית) ──
 .big-btn {
   display: block;
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   border: none;
   border-radius: var(--radius-sm);
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  transition: transform 0.05s ease, filter 0.15s ease;
+  transition: transform 0.06s var(--ease), filter 0.18s var(--ease), box-shadow 0.18s var(--ease);
 
   &:active {
     transform: translateY(1px);
   }
   &.primary {
-    background: var(--brand);
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
     color: #fff;
+    box-shadow: 0 12px 28px -10px rgba(66, 99, 235, 0.5);
+    &:hover {
+      filter: brightness(1.04);
+    }
   }
   &.accent {
     background: var(--accent);
     color: #fff;
+    box-shadow: 0 12px 24px -10px rgba(18, 184, 134, 0.4);
   }
   &.ghost {
     background: var(--soft);
@@ -89,7 +114,7 @@ button {
   }
 }
 
-// ── כרטיסים אחידים ──
+// ── כרטיס ──
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -98,10 +123,68 @@ button {
   padding: 16px;
 }
 
+// ── תווית "pill" ──
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+
+  &.green {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  &.blue {
+    background: #e7ecff;
+    color: var(--brand);
+  }
+  &.amber {
+    background: #fff4d6;
+    color: #b07a00;
+  }
+  &.red {
+    background: #ffeaea;
+    color: var(--danger);
+  }
+}
+
 // ── loader dialog שקוף ──
 .wait-dialog .mat-mdc-dialog-surface {
   background: transparent;
   box-shadow: none;
+}
+
+// ── עיצוב דיאלוגים — H-C-F (header/content/footer דבוקים, רק content גולל) ──
+// קריטי: שרשרת flex/min-height:0 מ-overlay-pane עד ל-.body של הקומפוננטה,
+// אחרת ה-overflow לא נכנס לפעולה ופס גלילה מופיע על הדיאלוג כולו.
+
+.cdk-overlay-pane.app-dialog {
+  margin: 16px;
+  max-height: calc(100dvh - 32px);
+}
+
+.app-dialog .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 22px;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column;
+  max-height: inherit;
+  min-height: 0;
+}
+
+.app-dialog .mat-mdc-dialog-surface {
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 // ── snackbar מעוגל ──
@@ -109,12 +192,20 @@ button {
   border-radius: 14px !important;
 }
 
+// ── checkbox ──
+.mat-mdc-checkbox {
+  --mdc-checkbox-selected-checkmark-color: #fff;
+}
+
 // ── פסי גלילה דקים ──
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cfd5e2;
+  background: var(--soft-2);
   border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c8cee0;
 }

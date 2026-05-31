@@ -1,20 +1,33 @@
-// ערכת צבעים — מובייל-פירסט, נקי ואפליקטיבי
+// ערכת צבעים — שפת עיצוב אפליקטיבית, רכה ומדויקת
 :root {
-  --brand: #3b5bdb;
+  --brand: #4263eb;
+  --brand-2: #5c7cfa;
   --brand-dark: #2f49b0;
-  --accent: #0ca678;
-  --warn: #f08c00;
-  --danger: #e03131;
+  --accent: #12b886;
+  --accent-soft: #d3f9ec;
+  --warn: #fab005;
+  --danger: #fa5252;
 
-  --bg: #eef1f7;
+  --bg: #f4f5fa;
+  --bg-2: #e9ecf5;
   --surface: #ffffff;
-  --soft: #f4f6fb;
-  --line: #e6e9f0;
+  --soft: #f2f4fa;
+  --soft-2: #e8ecf6;
+  --line: #e3e6ef;
 
-  --ink: #1c2433;
-  --muted: #6b7484;
+  --ink: #1a2235;
+  --ink-soft: #3a4256;
+  --muted: #6c7587;
+  --muted-2: #9aa1b1;
 
-  --radius: 20px;
-  --radius-sm: 14px;
-  --shadow: 0 12px 30px -16px rgba(28, 36, 51, 0.35);
+  --radius-xl: 22px;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 2px 8px -4px rgba(28, 36, 51, 0.18);
+  --shadow: 0 12px 28px -16px rgba(28, 36, 51, 0.32);
+  --shadow-lg: 0 24px 48px -20px rgba(28, 36, 51, 0.4);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }

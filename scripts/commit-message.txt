@@ -1,8 +1,29 @@
-feat: שלד פרויקט bar-ilan — פלטפורמת ניהול הסעות
+feat: דיאלוגי הורה/אירוע + מנוע סבב מלא + תיקוני אימות וניווט
 
-Stack: Node + Remult 3.3.10 + Angular 19 + Postgres.
-ארכיטקטורה by-domain (groups/users/events/attendance/carpool).
-מנוע סבב הוגן, סידור שבועי, multi-tenancy, i18n, PWA,
-התחברות מבוססת-session.
+UI/UX:
+- ParentDetailsComponent + EventDetailsComponent + SwapDriverComponent בדפוס H-C-F
+  (header דבוק למעלה, content גולל, footer דבוק למטה)
+- שדות קסטום מודרניים (במקום mat-form-field), Toggle switches, day-pills
+- כפתורי "+ הוספה" להורה ולאירוע במסך הקבוצה
+- שורות/כרטיסים לחיצים: הורה, אירוע, "הלוך/חזור" בכרטיס הסידור
+- עיצוב מקיף: gradients, shadows, design tokens מאוחדים, פונט Rubik אחיד
+- Status-bar BizTechoff צמודה לסוף, מסתירה טולבר/טאבים במסך ה-login
+- Material Icons font (תיקון אייקונים חתוכים)
+
+תכונות:
+- ניהול ילדים בדיאלוג ההורה (הוספה/מחיקה inline)
+- אירוע במספר ימים בשבוע (daysOfWeek: string[])
+- רוסטר ילדים לאירוע (EventEnrollment) — מי בסבב
+- החלפת נהג מסוננת לפי מעגל-הסבב של האירוע בלבד
+- יצירה אוטומטית של קבוצת ברירת מחדל בכניסה הראשונה
+- multi-select של ימים בשבוע באירוע חוזר
+- בחירת סוג אירוע עם autocomplete + יצירה אוטומטית של EventType חדש
+
+תיקוני אימות:
+- initRequest ב-remult-api להזרקת request ל-context
+  (תיקון שמירת session ב-remult 3 — לא קורה אוטומטית כמו ב-0.27)
+- APP_INITIALIZER להמתנה ל-initUser לפני bootstrap
+  (תיקון redirect מוטעה ל-sign-in כשמשתמש כן מחובר)
+- ניקוי מפורש של remult.user ב-signOut
 
 BizTechoff™ - התאמת העסק לעידן הדיגיטלי

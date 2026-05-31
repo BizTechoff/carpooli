@@ -1,69 +1,93 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
   box-sizing: border-box;
-  padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  overflow: hidden;
 }
 
 .topbar {
   flex: none;
+
   .title {
     font-weight: 800;
     font-size: 18px;
+    letter-spacing: 0.2px;
   }
   .spacer {
     flex: 1;
   }
   .user {
     font-size: 14px;
-    opacity: 0.9;
-    margin-inline-start: 8px;
+    font-weight: 600;
+    opacity: 0.95;
+    margin-inline-start: 6px;
   }
 }
 
 .content {
   flex: 1;
   overflow: auto;
-  padding: 14px;
+  padding: 16px 14px 22px;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
+// ── Tabbar — אינדיקציה פעילה ברורה ──
 .tabbar {
   flex: none;
   display: flex;
   justify-content: space-around;
   background: var(--surface);
   border-top: 1px solid var(--line);
-  padding: 8px 4px;
+  padding: 8px 6px 10px;
+  position: relative;
 
   .tab {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
-    flex: 1;
     text-decoration: none;
     color: var(--muted);
     font-size: 11px;
     font-weight: 700;
+    padding: 6px 8px;
+    border-radius: 14px;
+    transition: color 0.18s var(--ease), background 0.18s var(--ease), transform 0.06s var(--ease);
+
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
 
     &.active {
       color: var(--brand);
+      background: linear-gradient(180deg, rgba(66, 99, 235, 0.08), rgba(66, 99, 235, 0.02));
+
+      mat-icon {
+        transform: translateY(-1px);
+      }
     }
   }
 }
 
+// ── Status-bar צמודה לסוף ה-host (ילד אחרון ב-flex column) ──
 .status-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   background: var(--surface);
   border-top: 1px solid var(--line);
-  text-align: center;
   font-size: 11px;
-  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  padding: 7px 14px calc(7px + env(safe-area-inset-bottom));
 
   a {
     color: var(--muted);
@@ -71,15 +95,17 @@
     cursor: pointer;
     direction: ltr;
     unicode-bidi: isolate;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 
     i {
       font-style: italic;
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--brand);
     }
 
     &:hover {
       color: var(--brand);
-      text-decoration: underline;
     }
   }
 }

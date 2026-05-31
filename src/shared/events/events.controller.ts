@@ -24,11 +24,11 @@ export class EventsController extends ControllerBase {
 
     // תאריכים מבוקשים לפי הדפוס
     const wanted: Date[] = []
-    if (event.isRecurring && event.dayOfWeek) {
-      const target = event.dayOfWeek.dayNumber
+    if (event.isRecurring && event.daysOfWeek?.length) {
+      const targets = new Set(event.daysOfWeek.map((id) => Number(id)))
       const d = new Date(from)
       while (d <= to) {
-        if (d.getDay() === target) wanted.push(new Date(d))
+        if (targets.has(d.getDay())) wanted.push(new Date(d))
         d.setDate(d.getDate() + 1)
       }
     } else if (event.date) {

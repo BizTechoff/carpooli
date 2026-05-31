@@ -40,7 +40,7 @@ async function seed() {
     eventTypeId: eventType.id,
     location: 'אוניברסיטת בר-אילן',
     isRecurring: true,
-    dayOfWeek: DayOfWeek.sunday,
+    daysOfWeek: [DayOfWeek.sunday.id],
     startTime: '17:15',
     durationMinutes: 90
   })
